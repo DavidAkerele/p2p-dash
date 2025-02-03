@@ -1,36 +1,49 @@
-
-# Transaction Detail App - Company Test
+# Transaction Detail App - Web Developer Test
 
 ## Overview
 
-This web application was built as part of a technical test for a company. The app displays detailed transaction information fetched from local storage and features a dark mode/light mode toggle for enhanced user experience. 
+This web application was created as part of a practical test for the Web Developer role at **intelliSight**. The task involved building a simple **P2P Transaction Dashboard** using **Next.js**, to demonstrate skills in dynamic routing, API handling, and creating a clean user interface. 
 
-The app was developed using **React** with **Next.js** and incorporates simple styling using **CSS**.
+The app allows users to view transaction details, toggle between light and dark mode, and navigate through transaction information.
 
 ## Features
 
-- **Dark Mode/Light Mode Toggle**: Allows users to switch between dark and light themes for better accessibility and user preference.
-- **Transaction Details**: Displays detailed information about a transaction, including ID, sender, receiver, amount, status, and timestamp.
-- **Responsive Design**: The app is designed to be responsive on both desktop and mobile devices.
-- **Navigation**: A button that navigates the user back to the dashboard.
+- **Transaction Dashboard**: Displays a list of transactions with key details such as ID, sender, receiver, amount, and status.
+- **Transaction Detail Page**: Clicking on a transaction navigates to its detailed view with more information, including the timestamp.
+- **Dark Mode/Light Mode Toggle**: Users can toggle between dark and light modes.
+- **Transaction Status Filter**: A dropdown filter allows users to view transactions based on their status (Pending, Completed, Failed).
+- **Responsive Design**: The application is responsive and works well on both desktop and mobile.
   
 ## Technologies Used
 
-- **React (Next.js)**: Framework used to build the frontend of the application.
-- **CSS**: For styling and layout.
-- **LocalStorage**: Used to fetch transaction data for display.
+- **Next.js**: Framework for building the app and handling dynamic routing.
+- **CSS**: For styling the UI.
+- **LocalStorage**: Simulates API calls to fetch transaction data stored in the local storage.
+  
+## Task Requirements
 
+- **Homepage** (`/dashboard`):
+  - Displays a table of transactions with the following fields: ID, Sender Name, Receiver Name, Amount, and Status.
+  - A dropdown to filter transactions by status (Pending, Completed, Failed).
+  
+- **Transaction Details Page** (`/transaction/[id]`):
+  - Clicking on a transaction should navigate to its details page.
+  - The transaction details page displays all information, including the timestamp.
+  
+- **Bonus (Optional)**:
+  - Added dark mode support for a better user experience.
+  
 ## Setup
 
 To run this project locally, follow the steps below:
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/DavidAkerele/transaction-detail-app.git
    ```
 
 2. **Install dependencies**:
-   Make sure you have either `npm` or `yarn` installed. Then install the required dependencies by running:
+   Ensure you have either `npm` or `yarn` installed, then install the required dependencies:
    ```bash
    npm install
    ```
@@ -40,7 +53,7 @@ To run this project locally, follow the steps below:
    ```
 
 3. **Run the app**:
-   After installation, start the development server:
+   Start the development server:
    ```bash
    npm run dev
    ```
@@ -49,37 +62,26 @@ To run this project locally, follow the steps below:
    yarn dev
    ```
 
-4. Open the app in your browser:
-   Visit `http://localhost:3000` to see the app running.
+4. **View the app**:
+   Open your browser and visit `http://localhost:3000` to see the app in action.
 
 ## Usage
 
-### Viewing Transaction Details
-
-- Transaction data is fetched from the browser's local storage where a list of transactions is stored as JSON.
-- Each transaction includes:
-  - **Transaction ID**
-  - **Sender**
-  - **Receiver**
-  - **Amount**
-  - **Status**
-  - **Timestamp**
-
-### Dark/Light Mode Toggle
-
-- You can toggle between dark and light modes by clicking the button in the top-right corner of the screen.
+- **Dashboard**: View a list of transactions with the option to filter by status.
+- **Transaction Details**: Click on a transaction to see its details, including the timestamp.
+- **Dark Mode**: Use the toggle button in the top right to switch between light and dark themes.
 
 ## Project Structure
 
-The project has a simple folder structure:
-
 ```
-/transaction-app
+/transaction-detail-app
   /components
     - TransactionDetail.tsx
   /pages
     - index.tsx
     - dashboard.tsx
+    - transaction
+      - [id].tsx
   /public
   /styles
     - globals.css
@@ -93,8 +95,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Author
 
-- **Akerele David Damilola** – [Your GitHub Profile](https://github.com/your-profile)
-
----
-
-You can now copy and paste this straight into your `README.md`. If you need any adjustments or have additional sections to add, feel free to let me know!
+- **Akerele David Damilola** – [GitHub Profile](https://github.com/DavidAkerele)
