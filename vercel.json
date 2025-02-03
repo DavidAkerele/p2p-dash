@@ -1,0 +1,9 @@
+{
+    "build": {
+      "env": {
+        "BUN_INSTALL": "true"
+      },
+      "command": "bun run next build"
+    }
+  }
+  
