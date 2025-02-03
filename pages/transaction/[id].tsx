@@ -44,7 +44,7 @@ const TransactionDetail = () => {
     }
   }, [query.id]);
 
-  if (!transaction) return <p>Loading...</p>;
+  if (!transaction) return <p>Please wait while the transaction loads...</p>;
 
   return (
     <div
