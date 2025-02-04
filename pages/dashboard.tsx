@@ -416,7 +416,7 @@ const Dashboard = () => {
         .bottom-container{
           display: flex;
           flex-direction: row-reverse;
-          width: 70%;
+          width: 80%;
           justify-content: space-between;
           align-items:center;
           margin:auto;
@@ -605,8 +605,17 @@ const Dashboard = () => {
 /* Tablet screens (max-width: 1024px) */
 @media (max-width: 1024px) {
   .bottom-container {
-    width: 90%; /* Increase width to allow for more space */
+    width: 100%; /* Increase width to allow for more space */
+    flex-direction: column;
+    gap:50px;
   }
+  .chart{
+    width: 80%;
+  }
+
+  .new-transaction-container{
+  width:100%;
+  {/* background-color:red; */}
 }
 
 /* Mobile screens (max-width: 768px) */
