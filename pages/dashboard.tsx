@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -34,16 +34,6 @@ const Dashboard = () => {
   const router = useRouter();
 
   // Fetch transactions from localStorage
-  // useEffect(() => {
-  //   const storedTransactions = localStorage.getItem("transactions");
-  //   console.log("Stored Transactions:", storedTransactions);
-  //   if (storedTransactions) {
-  //     setTransactions(JSON.parse(storedTransactions));
-  //   } else {
-  //     setTransactions([]);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
 
   useEffect(() => {
     const storedTransactions = localStorage.getItem("transactions");
@@ -59,22 +49,13 @@ const Dashboard = () => {
     }
     setIsLoading(false);
   }, []);
-  
 
   // Save transactions to localStorage whenever they change
-  // useEffect(() => {
-  //   console.log("Saving Transactions:", transactions);
-  //   if (transactions.length > 0) {
-  //     localStorage.setItem("transactions", JSON.stringify(transactions));
-  //   }
-  // }, [transactions]);
-
   useEffect(() => {
     if (transactions.length > 0) {
       localStorage.setItem("transactions", JSON.stringify(transactions));
     }
   }, [transactions]);
-  
 
   // Fetch transactions
   useEffect(() => {
@@ -85,36 +66,6 @@ const Dashboard = () => {
         setIsLoading(false);
       });
   }, []);
-
-  // Real-time updates (simulated with WebSocket)
-  // useEffect(() => {
-  //   const ws = new WebSocket("ws://your-websocket-url");
-
-  //   ws.onmessage = (event) => {
-  //     const newTransaction = JSON.parse(event.data);
-  //     setTransactions((prev) => [...prev, newTransaction]);
-  //   };
-
-  //   return () => ws.close();
-  // }, []);
-
-  // useEffect(() => {
-  //   const ws = new WebSocket("ws://your-websocket-url");
-  
-  //   ws.onmessage = (event) => {
-  //     try {
-  //       const newTransaction = JSON.parse(event.data);
-  //       setTransactions((prev) => [...prev, newTransaction]);
-  //     } catch (error) {
-  //       console.error("WebSocket Error:", error);
-  //     }
-  //   };
-  
-  //   ws.onerror = (err) => console.error("WebSocket connection error", err);
-  
-  //   return () => ws.close();
-  // }, []);
-  
 
   // Filter and search transactions
   const filteredTransactions =
@@ -147,23 +98,22 @@ const Dashboard = () => {
 
   // Add new transaction
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  const newTx: Transaction = {
-    ...newTransaction,
-    id: Date.now(), // Unique ID
-    timestamp: new Date().toISOString(),
+    e.preventDefault();
+    const newTx: Transaction = {
+      ...newTransaction,
+      id: Date.now(), // Unique ID
+      timestamp: new Date().toISOString(),
+    };
+    setTransactions([...transactions, newTx]);
+    setNewTransaction({
+      id: 0,
+      sender: "",
+      receiver: "",
+      amount: 0,
+      status: "Pending",
+      timestamp: "",
+    });
   };
-  setTransactions([...transactions, newTx]);
-  setNewTransaction({
-    id: 0,
-    sender: "",
-    receiver: "",
-    amount: 0,
-    status: "Pending",
-    timestamp: "",
-  });
-};
-
 
   // Delete transaction
   const confirmDelete = () => {
@@ -288,71 +238,73 @@ const Dashboard = () => {
             </table>
           </div>
 
-          {/* Chart */}
-          <div className="chart-container">
-            <h2>Transaction Status Distribution</h2>
-            <PieChart width={400} height={300}>
-              <Pie
-                data={chartData}
-                cx={200}
-                cy={150}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-                label
-              >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </div>
+          <div className="bottom-container">
+            {/* Chart */}
+            <div className="chart-container">
+              <h2>Transaction Status Distribution</h2>
+              <PieChart width={335} height={300} className="chart">
+                <Pie
+                  data={chartData}
+                  cx={180}
+                  cy={130}
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </div>
 
-          {/* Add New Transaction Form */}
-          <div className="new-transaction-container">
-            <h2>Add a New Transaction</h2>
-            <form onSubmit={handleSubmit} className="transaction-form">
-              <input
-                type="text"
-                name="sender"
-                placeholder="Sender Name"
-                value={newTransaction.sender}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="receiver"
-                placeholder="Receiver Name"
-                value={newTransaction.receiver}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="number"
-                name="amount"
-                placeholder="Amount"
-                value={newTransaction.amount}
-                onChange={handleInputChange}
-                required
-              />
-              <select
-                name="status"
-                value={newTransaction.status}
-                onChange={handleSelectChange}
-                required
-              >
-                <option value="Pending">Pending</option>
-                <option value="Completed">Completed</option>
-                <option value="Failed">Failed</option>
-              </select>
-              <button type="submit">Add Transaction</button>
-            </form>
+            {/* Add New Transaction Form */}
+            <div className="new-transaction-container">
+              <h2>Add a New Transaction</h2>
+              <form onSubmit={handleSubmit} className="transaction-form">
+                <input
+                  type="text"
+                  name="sender"
+                  placeholder="Sender Name"
+                  value={newTransaction.sender}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="receiver"
+                  placeholder="Receiver Name"
+                  value={newTransaction.receiver}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="number"
+                  name="amount"
+                  placeholder="Amount"
+                  value={newTransaction.amount}
+                  onChange={handleInputChange}
+                  required
+                />
+                <select
+                  name="status"
+                  value={newTransaction.status}
+                  onChange={handleSelectChange}
+                  required
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Failed">Failed</option>
+                </select>
+                <button type="submit">Add Transaction</button>
+              </form>
+            </div>
           </div>
 
           {/* Confirmation Modal */}
@@ -461,6 +413,15 @@ const Dashboard = () => {
           padding: 20px;
         }
 
+        .bottom-container{
+          display: flex;
+          flex-direction: row-reverse;
+          width: 70%;
+          justify-content: space-between;
+          align-items:center;
+          margin:auto;
+        }
+
         .transaction-table {
           width: 100%;
           border-collapse: collapse;
@@ -528,12 +489,15 @@ const Dashboard = () => {
           padding: 20px;
           border-radius: 12px;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-          margin-bottom: 40px;
+          height: 100%;
+          max-width: 500px;
+          {/* margin-bottom: 40px; */}
+          
         }
 
         .new-transaction-container {
           background-color: ${isDarkMode ? "#2c3e50" : "#ffffff"};
-          padding: 30px;
+          padding: 20px;
           border-radius: 12px;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
           width: 100%;
@@ -635,6 +599,35 @@ const Dashboard = () => {
         .confirmation-modal button:hover {
           opacity: 0.9;
         }
+
+        
+
+/* Tablet screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .bottom-container {
+    width: 90%; /* Increase width to allow for more space */
+  }
+}
+
+/* Mobile screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .bottom-container {
+    flex-direction: column; /* Stack items vertically */
+    width: 100%; /* Use full width */
+    align-items: center; /* Center items */
+    text-align: center; /* Align text centrally if applicable */
+    gap:50px;
+  }
+
+  .chart{
+    width: 80%;
+  }
+
+  {/* .chart-container {
+    border-radius:0;
+  } */}
+}
+
       `}</style>
     </div>
   );
