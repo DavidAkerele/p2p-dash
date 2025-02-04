@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -33,28 +34,51 @@ const Dashboard = () => {
   const router = useRouter();
 
   // Fetch transactions from localStorage
+  // useEffect(() => {
+  //   const storedTransactions = localStorage.getItem("transactions");
+  //   console.log("Stored Transactions:", storedTransactions);
+  //   if (storedTransactions) {
+  //     setTransactions(JSON.parse(storedTransactions));
+  //   } else {
+  //     setTransactions([]);
+  //   }
+  //   setIsLoading(false);
+  // }, []);
+
   useEffect(() => {
     const storedTransactions = localStorage.getItem("transactions");
-    console.log("Stored Transactions:", storedTransactions);
     if (storedTransactions) {
       setTransactions(JSON.parse(storedTransactions));
     } else {
-      setTransactions([]);
+      fetch("/transactions.json")
+        .then((response) => response.json())
+        .then((data: Transaction[]) => {
+          setTransactions(data);
+          localStorage.setItem("transactions", JSON.stringify(data));
+        });
     }
     setIsLoading(false);
   }, []);
+  
 
   // Save transactions to localStorage whenever they change
+  // useEffect(() => {
+  //   console.log("Saving Transactions:", transactions);
+  //   if (transactions.length > 0) {
+  //     localStorage.setItem("transactions", JSON.stringify(transactions));
+  //   }
+  // }, [transactions]);
+
   useEffect(() => {
-    console.log("Saving Transactions:", transactions);
     if (transactions.length > 0) {
       localStorage.setItem("transactions", JSON.stringify(transactions));
     }
   }, [transactions]);
+  
 
   // Fetch transactions
   useEffect(() => {
-    fetch("/data/transactions.json")
+    fetch("/transactions.json")
       .then((response) => response.json())
       .then((data: Transaction[]) => {
         setTransactions(data);
@@ -63,16 +87,34 @@ const Dashboard = () => {
   }, []);
 
   // Real-time updates (simulated with WebSocket)
-  useEffect(() => {
-    const ws = new WebSocket("ws://your-websocket-url");
+  // useEffect(() => {
+  //   const ws = new WebSocket("ws://your-websocket-url");
 
-    ws.onmessage = (event) => {
-      const newTransaction = JSON.parse(event.data);
-      setTransactions((prev) => [...prev, newTransaction]);
-    };
+  //   ws.onmessage = (event) => {
+  //     const newTransaction = JSON.parse(event.data);
+  //     setTransactions((prev) => [...prev, newTransaction]);
+  //   };
 
-    return () => ws.close();
-  }, []);
+  //   return () => ws.close();
+  // }, []);
+
+  // useEffect(() => {
+  //   const ws = new WebSocket("ws://your-websocket-url");
+  
+  //   ws.onmessage = (event) => {
+  //     try {
+  //       const newTransaction = JSON.parse(event.data);
+  //       setTransactions((prev) => [...prev, newTransaction]);
+  //     } catch (error) {
+  //       console.error("WebSocket Error:", error);
+  //     }
+  //   };
+  
+  //   ws.onerror = (err) => console.error("WebSocket connection error", err);
+  
+  //   return () => ws.close();
+  // }, []);
+  
 
   // Filter and search transactions
   const filteredTransactions =
@@ -105,23 +147,23 @@ const Dashboard = () => {
 
   // Add new transaction
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newTx: Transaction = {
-      ...newTransaction,
-      id: transactions.length + 1,
-      timestamp: new Date().toISOString(),
-    };
-    const updatedTransactions = [...transactions, newTx];
-    setTransactions(updatedTransactions);
-    setNewTransaction({
-      id: 0,
-      sender: "",
-      receiver: "",
-      amount: 0,
-      status: "Pending",
-      timestamp: "",
-    });
+  e.preventDefault();
+  const newTx: Transaction = {
+    ...newTransaction,
+    id: Date.now(), // Unique ID
+    timestamp: new Date().toISOString(),
   };
+  setTransactions([...transactions, newTx]);
+  setNewTransaction({
+    id: 0,
+    sender: "",
+    receiver: "",
+    amount: 0,
+    status: "Pending",
+    timestamp: "",
+  });
+};
+
 
   // Delete transaction
   const confirmDelete = () => {
